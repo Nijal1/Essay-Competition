@@ -1,211 +1,121 @@
+{% extends "base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Essay Competition - Home</title>
-    <link rel="stylesheet" href="{% static 'css/home.css' %}">
-    <script src="{% static 'js/home.js' %}"></script>
-</head>
 
-<body>
+{% block content %}
+<!-- Your home page content goes here -->
 
-    {% if messages %}
-    <div id="messages-container">
-        {% for message in messages %}
-        <p class="message">{{ message }}</p>
-        {% endfor %}
+<section id="home" class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to Nepal Essay Competition</h1>
+            <p class="hero-subtitle">Write, Compete, and Win! Our AI-powered system checks your grammar, spelling,
+                and writing quality to determine the top performers.</p>
+            <div class="hero-buttons">
+                <a href="#how-it-works" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
     </div>
-    {% endif %}
+</section>
 
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            const messages = document.getElementById('messages-container');
-            if (messages) {
-                setTimeout(() => {
-                    messages.style.display = 'none';
-                }, 5000);
-            }
-        });
-    </script>
+<!-- About Section -->
+<section id="about" class="about">
+    <div class="container">
+        <h2 class="section-title">About the Competition</h2>
+        <p class="section-description">Our essay competition platform uses advanced AI technology to evaluate your
+            writing skills. We check for grammar mistakes, spelling errors, and overall writing quality to ensure
+            fair and accurate rankings.</p>
 
-    <!-- Header with Nepal image -->
-    <header class="header" id="header">
-        <div class="symbols-container">
-            <div class="symbol-item">
-                <img src="{% static 'images/nepalflag.png' %}" alt="Nepal Flag" class="symbol-img">
-                <span class="symbol-label">Nepal</span>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon grammar">
+                    <span>✓</span>
+                </div>
+                <h3>Grammar Check</h3>
+                <p>Advanced grammar analysis to identify and count mistakes in your essay.</p>
             </div>
-            <div class="symbol-item">
-                <img src="{% static 'images/danphe.png' %}" alt="Danphe" class="symbol-img">
-                <span class="symbol-label">Danphe</span>
+            <div class="feature-card">
+                <div class="feature-icon spelling">
+                    <span>ABC</span>
+                </div>
+                <h3>Spelling Check</h3>
+                <p>Comprehensive spelling verification to ensure accuracy in your writing.</p>
             </div>
-            <div class="symbol-item">
-                <img src="{% static 'images/cow.png' %}" alt="Cow" class="symbol-img">
-                <span class="symbol-label">Cow</span>
-            </div>
-            <div class="symbol-item">
-                <img src="{% static 'images/rhododendron.png' %}" alt="Rhododendron" class="symbol-img">
-                <span class="symbol-label">Rhododendron</span>
+            <div class="feature-card">
+                <div class="feature-icon ranking">
+                    <span>🏆</span>
+                </div>
+                <h3>Auto Ranking</h3>
+                <p>Automatic ranking system that displays the top 3 participants with the least mistakes.</p>
             </div>
         </div>
+    </div>
+</section>
 
-        <!-- Navigation -->
-        <nav class="navbar">
-            <div class="logo">
-                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                    <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
-                </svg>
-                <span class="logo-text">Essay Competition</span>
+<!-- How It Works Section -->
+<section id="how-it-works" class="how-it-works">
+    <div class="container">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Register Account</h3>
+                <p>Create your account to participate in the competition.</p>
             </div>
-
-            <div class="nav-menu" id="navMenu">
-                <a href="#home" class="nav-link">Home</a>
-                <a href="#about" class="nav-link">About</a>
-                <a href="#how-it-works" class="nav-link">How It Works</a>
-                <a href="#contact" class="nav-link">Contact</a>
-                <a href="{% url 'leaderboard' %}" class="nav-link">Leaderboard</a>
-                <a href="{% url 'essay' %}" class="nav-link">Submit Essay</a>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Submit Essay</h3>
+                <p>Write and submit your essay on the given topic.</p>
             </div>
-
-            <div class="nav-buttons">
-                {% if request.user.is_authenticated %}
-                <span> {{ request.user.username }}</span>
-                <a href="{% url 'logout' %}" class="btn-logout" onclick="return confirm('Are you sure you want to logout?');">
-                    Logout
-                </a>
-                {% else %}
-                <a href="{% url 'login' %}" class="btn-login">Login</a>
-                {% endif %}
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>AI Analysis</h3>
+                <p>Our system analyzes your essay for errors and quality.</p>
             </div>
-
-            <button class="menu-toggle" id="menuToggle">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1 class="hero-title">Welcome to Nepal Essay Competition</h1>
-                <p class="hero-subtitle">Write, Compete, and Win! Our AI-powered system checks your grammar, spelling,
-                    and writing quality to determine the top performers.</p>
-                <div class="hero-buttons">
-                    <a href="#how-it-works" class="btn-secondary">Learn More</a>
-                </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>View Rankings</h3>
+                <p>Check the leaderboard to see your ranking and performance.</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2 class="section-title">About the Competition</h2>
-            <p class="section-description">Our essay competition platform uses advanced AI technology to evaluate your
-                writing skills. We check for grammar mistakes, spelling errors, and overall writing quality to ensure
-                fair and accurate rankings.</p>
+<!-- Contact Section -->
+<section id="contact" class="contact">
+    <div class="container">
+        <h2 class="section-title">Contact Us</h2>
+        <p class="section-description">Have questions? Feel free to reach out to us</p>
 
-            <div class="features">
-                <div class="feature-card">
-                    <div class="feature-icon grammar">
-                        <span>✓</span>
-                    </div>
-                    <h3>Grammar Check</h3>
-                    <p>Advanced grammar analysis to identify and count mistakes in your essay.</p>
+        <div class="contact-content">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>Email</h3>
+                    <p>info@essaycompetition.np</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon spelling">
-                        <span>ABC</span>
-                    </div>
-                    <h3>Spelling Check</h3>
-                    <p>Comprehensive spelling verification to ensure accuracy in your writing.</p>
+                <div class="contact-item">
+                    <h3>Phone</h3>
+                    <p>+977-1-XXXXXXX</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon ranking">
-                        <span>🏆</span>
-                    </div>
-                    <h3>Auto Ranking</h3>
-                    <p>Automatic ranking system that displays the top 3 participants with the least mistakes.</p>
+                <div class="contact-item">
+                    <h3>Address</h3>
+                    <p>Kathmandu, Nepal</p>
                 </div>
             </div>
+
+            <form class="contact-form">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Your Message" rows="5" required></textarea>
+                <button type="submit" class="btn-submit">Send Message</button>
+            </form>
         </div>
-    </section>
+    </div>
+</section>
+{% endblock %}
 
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="how-it-works">
-        <div class="container">
-            <h2 class="section-title">How It Works</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Register Account</h3>
-                    <p>Create your account to participate in the competition.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Submit Essay</h3>
-                    <p>Write and submit your essay on the given topic.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>AI Analysis</h3>
-                    <p>Our system analyzes your essay for errors and quality.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>View Rankings</h3>
-                    <p>Check the leaderboard to see your ranking and performance.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2 class="section-title">Contact Us</h2>
-            <p class="section-description">Have questions? Feel free to reach out to us</p>
-
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <h3>Email</h3>
-                        <p>info@essaycompetition.np</p>
-                    </div>
-                    <div class="contact-item">
-                        <h3>Phone</h3>
-                        <p>+977-1-XXXXXXX</p>
-                    </div>
-                    <div class="contact-item">
-                        <h3>Address</h3>
-                        <p>Kathmandu, Nepal</p>
-                    </div>
-                </div>
-
-                <form class="contact-form">
-                    <input type="text" placeholder="Your Name" required>
-                    <input type="email" placeholder="Your Email" required>
-                    <textarea placeholder="Your Message" rows="5" required></textarea>
-                    <button type="submit" class="btn-submit">Send Message</button>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Nepal Essay Competition. All rights reserved.</p>
-        </div>
-    </footer>
-
-</body>
-
-</html>

@@ -70,6 +70,19 @@ body {
     font-size: 18px;
 }
 
+.logo-icon {
+    width: 32px;
+    height: 32px;
+    color: black;
+    stroke-width: 2;
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1f2937;
+}
+
 .nav-menu {
     display: flex;
     gap: 22px;

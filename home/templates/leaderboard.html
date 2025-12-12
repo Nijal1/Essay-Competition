@@ -1,146 +1,107 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaderboard - Essay Competition</title>
-    <link rel="stylesheet" href="{% static 'css/leaderboard.css' %}">
-</head>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/leaderboard.css' %}">
+{% endblock %}
 
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <nav class="navbar">
-                <div class="logo">
-                    <span class="logo-text">Essay Competition</span>
-                </div>
-
-                <div class="nav-menu">
-                    <a href="{% url 'home' %}" class="nav-link">Home</a>
-                    <a href="{% url 'leaderboard' %}" class="nav-link active">Leaderboard</a>
-                </div>
-
-                <div class="nav-actions">
-                    {% if user.is_authenticated %}
-                    <div class="user-info">
-                        <span>{{ user.username }}</span>
-                    </div>
-                    <a href="{% url 'logout' %}" class="btn-logout">Logout</a>
-                    {% else %}
-                    <a href="{% url 'login' %}" class="btn-login-nav">Login</a>
-
-                    {% endif %}
-                </div>
-            </nav>
+{% block content %}
+<main class="main-content leaderboard-page">
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Leaderboard</h1>
+            <p class="page-description">Top performers with the least errors in their essays</p>
         </div>
-    </header>
 
-    <main class="main-content">
-        <div class="container">
-            <div class="page-header">
-                <h1>Leaderboard</h1>
-                <p class="page-description">Top performers with the least errors in their essays</p>
-            </div>
+        <!-- Top 3 Podium -->
+        {% if essays %}
+        <div class="podium-section">
+            <div class="podium">
+                {% for essay in essays|slice:":3" %}
+                {% if forloop.counter == 1 %}
+                <div class="podium-item first">
+                    <div class="rank-badge gold"><span>1st</span></div>
+                    {% elif forloop.counter == 2 %}
+                    <div class="podium-item second">
+                        <div class="rank-badge silver"><span>2nd</span></div>
+                        {% else %}
+                        <div class="podium-item third">
+                            <div class="rank-badge bronze"><span>3rd</span></div>
+                            {% endif %}
 
-            <!-- Top 3 Podium -->
-            {% if essays %}
-            <div class="podium-section">
-                <div class="podium">
-                    {% for essay in essays|slice:":3" %}
-                    <div
-                        class="podium-item {% if forloop.counter == 1 %}first{% elif forloop.counter == 2 %}second{% else %}third{% endif %}">
-                        <div
-                            class="rank-badge {% if forloop.counter == 1 %}gold{% elif forloop.counter == 2 %}silver{% else %}bronze{% endif %}">
-                            <span>{% if forloop.counter == 1 %}1st{% elif forloop.counter == 2 %}2nd{% else %}3rd{% endif %}</span>
-                        </div>
-                        <h3>{{ essay.user.username }}</h3>
-                        <p class="essay-title">{{ essay.title|truncatewords:5 }}</p>
-                        <div class="score-info">
-                            <span class="score">{{ essay.score }}</span>
-                            <span class="score-label">Score</span>
-                        </div>
-                        <div class="error-stats">
-                            <div class="error-item">
-                                <span class="error-count">{{ essay.grammar_errors }}</span>
-                                <span class="error-type">Grammar</span>
+                            <h3>{{ essay.user.username }}</h3>
+                            <p class="essay-title">{{ essay.title|truncatewords:5 }}</p>
+                            <div class="score-info">
+                                <span class="score">{{ essay.score }}</span>
+                                <span class="score-label">Score</span>
                             </div>
-                            <div class="error-item">
-                                <span class="error-count">{{ essay.spelling_errors }}</span>
-                                <span class="error-type">Spelling</span>
+                            <div class="error-stats">
+                                <div class="error-item">
+                                    <span class="error-count">{{ essay.grammar_errors }}</span>
+                                    <span class="error-type">Grammar</span>
+                                </div>
+                                <div class="error-item">
+                                    <span class="error-count">{{ essay.spelling_errors }}</span>
+                                    <span class="error-type">Spelling</span>
+                                </div>
                             </div>
                         </div>
+                        {% endfor %}
                     </div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-
-
-            <!-- Full Leaderboard Table -->
-            <div class="leaderboard-table-section">
-                <h2>All Rankings</h2>
-            
-                {% if essays %}
-                <div class="table-wrapper">
-                    <table class="leaderboard-table">
-                        <thead>
-                            <tr>
-                                <th>Rank</th>
-                                <th>User</th>
-                                <th>Essay Title</th>
-                                <th>Score</th>
-                                <th>Grammar Errors</th>
-                                <th>Spelling Errors</th>
-                                <th>Total Errors</th>
-                                <th>Submitted On</th>
-                                <th>PDF</th>
-                            </tr>
-                        </thead>
-            
-                        <tbody>
-                            {% for essay in essays %}
-                            <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td>{{ essay.user.username }}</td>
-                                <td>{{ essay.title }}</td>
-                                <td>{{ essay.score }}</td>
-                                <td>{{ essay.grammar_errors }}</td>
-                                <td>{{ essay.spelling_errors }}</td>
-                                <td>{{ essay.total_errors }}</td>
-                                <td>{{ essay.created_at|date:"M d, Y" }}</td>
-                                <td>
-                                    {% if essay.pdf_file %}
-                                    <a href="{{ essay.pdf_file.url }}" download>Download PDF</a>
-                                    {% else %}
-                                    N/A
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            
-                {% else %}
-                <div class="empty-state">
-                    <h3>No Essays Yet</h3>
-                    <p>Be the first to submit an essay and top the leaderboard!</p>
-                    <a href="{% url 'submit_essay' %}" class="btn-primary">Submit Essay</a>
                 </div>
                 {% endif %}
+
+                <!-- Full Leaderboard Table -->
+                <div class="leaderboard-table-section">
+                    <h2>All Rankings</h2>
+                    {% if essays %}
+                    <div class="table-wrapper">
+                        <table class="leaderboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>User</th>
+                                    <th>Essay Title</th>
+                                    <th>Score</th>
+                                    <th>Grammar Errors</th>
+                                    <th>Spelling Errors</th>
+                                    <th>Total Errors</th>
+                                    <th>Submitted On</th>
+                                    <th>PDF</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for essay in essays %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ essay.user.username }}</td>
+                                    <td>{{ essay.title }}</td>
+                                    <td>{{ essay.score }}</td>
+                                    <td>{{ essay.grammar_errors }}</td>
+                                    <td>{{ essay.spelling_errors }}</td>
+                                    <td>{{ essay.total_errors }}</td>
+                                    <td>{{ essay.created_at|date:"M d, Y" }}</td>
+                                    <td>
+                                        {% if essay.pdf_file %}
+                                        <a href="{{ essay.pdf_file.url }}" download>Download PDF</a>
+                                        {% else %}
+                                        N/A
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="empty-state">
+                        <h3>No Essays Yet</h3>
+                        <p>Be the first to submit an essay and top the leaderboard!</p>
+                        <a href="{% url 'submit_essay' %}" class="btn-primary">Submit Essay</a>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
-
-        </div>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Essay Competition. All rights reserved.</p>
-        </div>
-    </footer>
-</body>
-
-</html>
+</main>
+{% endblock %}
