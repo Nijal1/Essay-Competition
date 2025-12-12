@@ -1,0 +1,98 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Essay Competition</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="login-container">
+
+        <div class="login-form-section">
+            <div class="form-wrapper">
+
+                <!-- Header -->
+                <div class="login-header">
+                    <div class="logo">
+                        <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                            <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
+                        </svg>
+                        <span class="logo-text">Essay Competition</span>
+                    </div>
+                    <h1>Welcome Back!</h1>
+                    <p class="subtitle">Please login to your account</p>
+                </div>
+
+                <!-- Login Form -->
+                <form class="login-form" method="POST" action="{% url 'login' %}">
+                    {% csrf_token %}
+
+                    <!-- Non-field errors (like invalid credentials) -->
+                    {% if form.non_field_errors %}
+                    <div class="messages">
+                        {% for error in form.non_field_errors %}
+                        <p class="error">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Username Field -->
+                    <div class="form-group">
+                        <label for="{{ form.username.id_for_label }}">Username</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                        <p class="error">{{ form.username.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-group">
+                        <label for="{{ form.password.id_for_label }}">Password</label>
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                        <p class="error">{{ form.password.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+
+                    <!-- Remember Me Checkbox -->
+                    <div class="form-group remember-me">
+                        {{ form.remember_me }}
+                        <label for="{{ form.remember_me.id_for_label }}">Remember Me</label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-login">Login</button>
+                </form>
+
+                <!-- Back to Home -->
+                <div class="back-home">
+                    <a href="/">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M19 12H5M12 19l-7-7 7-7" />
+                        </svg>
+                        Back to Home
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Right Section Info -->
+        <div class="login-info-section">
+            <div class="info-content">
+                <h2>Nepal Essay Competition</h2>
+                <p class="info-description">
+                    Join thousands of participants in showcasing your writing skills.
+                    Our AI-powered platform evaluates your essays fairly and accurately.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
