@@ -1,0 +1,134 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Feather Icons for modern look -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+</head>
+
+<body>
+    <div class="admin-wrapper">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Panel</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="#" class="tab-link active" data-tab="dashboard">
+                            <i data-feather="home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="tab-link" data-tab="users">
+                            <i data-feather="users"></i>
+                            <span>Users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="tab-link" data-tab="essays">
+                            <i data-feather="file-text"></i>
+                            <span>Essays</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="{% url 'logout' %}" class="logout-btn">
+                    <i data-feather="log-out"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <main class="content">
+            <!-- Header -->
+            <header class="content-header">
+                <div class="header-left">
+                    <h1 id="page-title">Dashboard</h1>
+                    <p class="header-subtitle">Welcome back, Admin!</p>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <i data-feather="user"></i>
+                        </div>
+                        <span class="user-name">{{ request.user.username }}</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Messages -->
+            {% if messages %}
+            <div class="messages-container">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    <i
+                        data-feather="{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' %}alert-circle{% else %}info{% endif %}"></i>
+                    <span>{{ message }}</span>
+                    <button class="close-alert" onclick="this.parentElement.remove()">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Content Area -->
+            <div class="content-body">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </main>
+
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Initialize Feather icons
+            feather.replace();
+
+            // Show first tab by default
+            $('.tab-content').hide();
+            $('#dashboard').show();
+
+            // Tab click
+            $('.tab-link').click(function (e) {
+                e.preventDefault();
+                var tab = $(this).data('tab');
+
+                // Update active state
+                $('.tab-link').removeClass('active');
+                $(this).addClass('active');
+
+                // Update page title
+                var tabName = tab.charAt(0).toUpperCase() + tab.slice(1);
+                $('#page-title').text(tabName);
+
+                // Show selected tab
+                $('.tab-content').hide();
+                $('#' + tab).fadeIn(200);
+            });
+
+            // Auto-dismiss alerts after 5 seconds
+            setTimeout(function () {
+                $('.alert').fadeOut(300, function () {
+                    $(this).remove();
+                });
+            }, 5000);
+        });
+    </script>
+</body>
+
+</html>
