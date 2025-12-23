@@ -55,7 +55,7 @@ ROOT_URLCONF = 'Competition.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [BASE_DIR / 'templates'],  # GOOD
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -133,16 +133,14 @@ LOGIN_REDIRECT_URL = '/essay/'  # after login, normal users go here
 LOGOUT_REDIRECT_URL = '/'       # after logout
 
 
-# Static files
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Custom User model
 AUTH_USER_MODEL = 'home.CustomUser'
+
 
 

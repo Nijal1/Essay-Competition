@@ -1,10 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.conf import settings 
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+import os
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, username, password=None, **extra_fields):
+    def create_user(self, username, password=None, **extra_fields):  
         if not username:
             raise ValueError("Username is required")
         user = self.model(username=username, **extra_fields)
@@ -61,6 +64,15 @@ class Essay(models.Model):
 
     def __str__(self):
         return f"{self.title} by {self.user.username}"
+    
+
+   
+
+@receiver(post_delete, sender=Essay)
+def delete_pdf_file(sender, instance, **kwargs):
+    if instance.pdf_file and os.path.isfile(instance.pdf_file.path):
+        os.remove(instance.pdf_file.path)
+
 
 
 
