@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<div class="profile-container">
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-header-content">
+            <div class="profile-avatar">
+                👤
+            </div>
+            <div class="profile-info">
+                <h1>{{ user.username }}</h1>
+                <p>📅 Created at {{ user.created_at|date:"F Y" }}</p>
+                {% if user.DOB %}
+                <p>🎂 Date of Birth: {{ user.DOB|date:"F d, Y" }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Grid -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon essays">📚</div>
+            <div class="stat-label">Total Essays</div>
+            <div class="stat-value">{{ essay_count }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon score">🏆</div>
+            <div class="stat-label">Total Score</div>
+            <div class="stat-value">{{ total_score }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon average">⭐</div>
+            <div class="stat-label">Average Score</div>
+            <div class="stat-value">{{ average_score|floatformat:2 }}</div>
+        </div>
+    </div>
+
+    <!-- Essays Section -->
+    <div class="essays-section">
+        <div class="section-header">
+            <span class="section-icon">📝</span>
+            <h2>My Essays</h2>
+        </div>
+
+        {% if essays %}
+        <table class="essays-table">
+            <thead>
+                <tr>
+                    <th>Essay Title</th>
+                    <th>Score</th>
+                    <th>Status</th>
+                    <th>Document</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for essay in essays %}
+                <tr>
+                    <td>
+                        <div class="essay-title">
+                            📄 {{ essay.title }}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="essay-score">{{ essay.score }}</span>
+                    </td>
+                    <td>
+                        {% if essay.is_approved %}
+                        <span class="status-badge approved">
+                            ✓ Approved
+                        </span>
+                        {% elif essay.is_rejected %}
+                        <span class="status-badge rejected">
+                            ✗ Rejected
+                        </span>
+                        {% else %}
+                        <span class="status-badge pending">
+                            ⏱ Pending
+                        </span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if essay.pdf_file %}
+                        <a href="{{ essay.pdf_file.url }}" target="_blank" class="pdf-link">
+                            📎 View PDF
+                        </a>
+                        {% else %}
+                        <span style="color: #999;">No file</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">📭</div>
+            <h3>No Essays Yet</h3>
+            <p>You haven't submitted any essays. Start writing to showcase your skills!</p>
+            <a href="{% url 'essay' %}" class="submit-essay-btn">
+                ✍️ Submit Your First Essay
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

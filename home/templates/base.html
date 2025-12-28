@@ -1,21 +1,21 @@
-
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Essay Competition</title>
+    <title>Nepal Essay Competition</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
 
-
-
 <body>
-
     {% if messages %}
     <div id="messages-container">
         {% for message in messages %}
@@ -24,18 +24,6 @@
     </div>
     {% endif %}
 
-    <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            const messages = document.getElementById('messages-container');
-            if (messages) {
-                setTimeout(() => {
-                    messages.style.display = 'none';
-                }, 5000);
-            }
-        });
-    </script>
-
-    <!-- Header with Nepal image -->
     <header class="header" id="header">
         <div class="symbols-container">
             <div class="symbol-item">
@@ -56,15 +44,11 @@
             </div>
         </div>
 
-        <!-- Navigation -->
         <nav class="navbar">
-            <div class="logo">
-                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                    <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
-                </svg>
-                <span class="logo-text">Essay Competition</span>
-            </div>
+            <a href="{% url 'home' %}" class="logo">
+                <img src="{% static 'images/logo1.png' %}" alt="Nepal Essay Competition Logo" class="logo-img">
+            </a>
+            
 
             <div class="nav-menu" id="navMenu">
                 <a href="{% url 'home' %}" class="nav-link">Home</a>
@@ -72,22 +56,44 @@
                 <a href="#how-it-works" class="nav-link">How It Works</a>
                 <a href="#contact" class="nav-link">Contact</a>
                 <a href="{% url 'leaderboard' %}" class="nav-link">Leaderboard</a>
-                <a href="{% url 'essay' %}" class="nav-link">Submit Essay</a>
+                <a href="{% url 'essay' %}" class="nav-link nav-link-highlight">Submit Essay</a>
             </div>
 
             <div class="nav-buttons">
                 {% if request.user.is_authenticated %}
-                <span> {{ request.user.username }}</span>
-                <a href="{% url 'logout' %}" class="btn-logout"
-                    onclick="return confirm('Are you sure you want to logout?');">
-                    Logout
-                </a>
+                <div class="profile-dropdown">
+                    <button class="profile-btn" id="profileBtn">
+                        <span class="profile-avatar">{{ request.user.username|slice:":1"|upper }}</span>
+                        {{ request.user.username }}
+                        <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M6 9l6 6 6-6" />
+                        </svg>
+                    </button>
+                    <div class="dropdown-content" id="profileDropdown">
+                        <a href="{% url 'profile' %}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                <circle cx="12" cy="7" r="4" />
+                            </svg>
+                            My Profile
+                        </a>
+                        <a href="{% url 'logout' %}" onclick="return confirm('Are you sure you want to logout?');"
+                            class="logout-link">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16,17 21,12 16,7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
+                            </svg>
+                            Logout
+                        </a>
+                    </div>
+                </div>
                 {% else %}
                 <a href="{% url 'login' %}" class="btn-login">Login</a>
                 {% endif %}
             </div>
 
-            <button class="menu-toggle" id="menuToggle">
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -95,20 +101,28 @@
         </nav>
     </header>
 
-    <!-- Main content -->
     <main class="main-content">
         {% block content %}{% endblock %}
     </main>
-    
-    <!-- Footer -->
+
     <footer class="footer">
-        <div class="container">
-            <p>&copy; 2025 Essay Competition. All rights reserved.</p>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                    <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
+                </svg>
+                <span>Essay Competition</span>
+            </div>
+            <p class="footer-tagline">Celebrating the art of writing across Nepal</p>
+            <div class="footer-divider"></div>
+            <p class="footer-copyright">&copy; 2025 Nepal Essay Competition. All rights reserved.</p>
         </div>
     </footer>
+
+    <script src="{% static 'js/base.js' %}"></script>
+
+    
 </body>
 
 </html>
-
-
-

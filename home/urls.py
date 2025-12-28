@@ -10,6 +10,8 @@ urlpatterns = [
     path('essay/', views.essay_view, name='essay'),
     path('submit/', views.submit_essay, name='submit_essay'),
     path('leaderboard/', views.leaderboard, name='leaderboard'),
+    path('profile/', views.user_profile, name='profile'),
+
 
     # CUSTOM ADMIN DASHBOARD
     path(

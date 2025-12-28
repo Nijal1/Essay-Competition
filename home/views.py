@@ -10,6 +10,7 @@ from io import BytesIO
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet
+from django.db.models import Avg, Sum
 
 User = get_user_model()
 
@@ -205,6 +206,23 @@ def home_view(request):
 @login_required
 def essay_view(request):
     return render(request, 'essay.html')
+
+
+
+
+@login_required
+def user_profile(request):
+    user = request.user
+    essays = Essay.objects.filter(user=user)
+
+    context = {
+        "user": user,
+        "essay_count": essays.count(),
+        "total_score": essays.aggregate(Sum("score"))["score__sum"] or 0,
+        "average_score": essays.aggregate(Avg("score"))["score__avg"] or 0,
+        "essays": essays,
+    }
+    return render(request, "profile.html", context)
 
 
 @login_required

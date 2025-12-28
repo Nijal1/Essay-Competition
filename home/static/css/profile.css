@@ -1,0 +1,219 @@
+.profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+/* Profile Header */
+
+
+/* Statistics Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+    border: 1px solid var(--gray-200);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 15px;
+    color: var(--white);
+}
+
+.stat-icon.essays {
+    background: linear-gradient(135deg, var(--secondary-light) 0%, var(--secondary-dark) 100%);
+}
+
+.stat-icon.score {
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-dark) 100%);
+}
+
+.stat-icon.average {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--gray-500);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--gray-800);
+}
+
+/* Essays Section */
+.essays-section {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 30px;
+    box-shadow: var(--shadow-md);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--gray-200);
+}
+
+.section-header h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--gray-800);
+}
+
+.section-icon {
+    font-size: 28px;
+}
+
+.essays-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+.essays-table thead tr {
+    background: var(--gray-100);
+}
+
+.essays-table thead th {
+    padding: 15px 20px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--gray-700);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+}
+
+.essays-table tbody tr {
+    background: var(--white);
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+}
+
+.essays-table tbody tr:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-md);
+}
+
+.essays-table tbody td {
+    padding: 20px;
+    border: none;
+    font-size: 15px;
+    color: var(--gray-800);
+}
+
+.essay-title {
+    color: var(--gray-800);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.essay-score {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--white);
+}
+
+.status-badge.approved {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.status-badge.rejected {
+    background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+}
+
+.status-badge.pending {
+    background: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%);
+}
+
+.pdf-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, var(--secondary-light) 0%, var(--secondary-dark) 100%);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 13px;
+    transition: all var(--transition-base);
+}
+
+.pdf-link:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    color: var(--white);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--gray-500);
+}
+
+.submit-essay-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    transition: all var(--transition-base);
+}
+
+.submit-essay-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    color: var(--white);
+}

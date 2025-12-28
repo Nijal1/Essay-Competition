@@ -5,18 +5,51 @@
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
 
-
 {% block content %}
-<!-- Your home page content goes here -->
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-decoration hero-decoration-1"></div>
+    <div class="hero-decoration hero-decoration-2"></div>
+    <div class="hero-decoration hero-decoration-3"></div>
 
-<section id="home" class="hero">
-    <div class="container">
-        <div class="hero-content">
-            <h1 class="hero-title">Welcome to Nepal Essay Competition</h1>
-            <p class="hero-subtitle">Write, Compete, and Win! Our AI-powered system checks your grammar, spelling,
-                and writing quality to determine the top performers.</p>
-            <div class="hero-buttons">
-                <a href="#how-it-works" class="btn-secondary">Learn More</a>
+    <div class="hero-content">
+        <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            Now accepting submissions
+        </div>
+
+        <h1 class="hero-title">
+            Welcome to Nepal<br>
+            <span class="hero-title-highlight">Essay Competition</span>
+        </h1>
+
+        <p class="hero-subtitle">
+            Write, Compete, and Win! Our AI-powered system checks your grammar,
+            spelling, and writing quality to determine the top performers.
+        </p>
+
+        <div class="hero-buttons">
+            <a href="{% url 'essay' %}" class="btn-hero-primary">
+                Submit Essay
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </a>
+            <a href="#how-it-works" class="btn-hero-secondary">Learn More</a>
+        </div>
+
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-value">500+</div>
+                <div class="hero-stat-label">Participants</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">50+</div>
+                <div class="hero-stat-label">Schools</div>
+            </div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">Rs.50K</div>
+                <div class="hero-stat-label">Prizes</div>
             </div>
         </div>
     </div>
@@ -25,32 +58,36 @@
 <!-- About Section -->
 <section id="about" class="about">
     <div class="container">
-        <h2 class="section-title">About the Competition</h2>
-        <p class="section-description">Our essay competition platform uses advanced AI technology to evaluate your
-            writing skills. We check for grammar mistakes, spelling errors, and overall writing quality to ensure
-            fair and accurate rankings.</p>
+        <div class="section-header">
+            <span class="section-badge">About</span>
+            <h2 class="section-title">About the Competition</h2>
+            <p class="section-description">
+                Our essay competition platform uses advanced AI technology to evaluate your
+                writing skills with fair and accurate rankings.
+            </p>
+        </div>
 
-        <div class="features">
+        <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon grammar">
-                    <span>✓</span>
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20,6 9,17 4,12" />
+                    </svg>
                 </div>
                 <h3>Grammar Check</h3>
                 <p>Advanced grammar analysis to identify and count mistakes in your essay.</p>
             </div>
+
             <div class="feature-card">
-                <div class="feature-icon spelling">
-                    <span>ABC</span>
-                </div>
+                <div class="feature-icon spelling">ABC</div>
                 <h3>Spelling Check</h3>
                 <p>Comprehensive spelling verification to ensure accuracy in your writing.</p>
             </div>
+
             <div class="feature-card">
-                <div class="feature-icon ranking">
-                    <span>🏆</span>
-                </div>
+                <div class="feature-icon ranking">🏆</div>
                 <h3>Auto Ranking</h3>
-                <p>Automatic ranking system that displays the top 3 participants with the least mistakes.</p>
+                <p>Automatic ranking system that displays the top performers with the least mistakes.</p>
             </div>
         </div>
     </div>
@@ -59,27 +96,56 @@
 <!-- How It Works Section -->
 <section id="how-it-works" class="how-it-works">
     <div class="container">
-        <h2 class="section-title">How It Works</h2>
-        <div class="steps">
-            <div class="step">
+        <div class="section-header">
+            <span class="section-badge">Process</span>
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-description">
+                Follow these simple steps to participate in the competition
+            </p>
+        </div>
+
+        <div class="steps-container">
+            <div class="step-card">
                 <div class="step-number">1</div>
+                <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="8.5" cy="7" r="4" />
+                    <line x1="20" y1="8" x2="20" y2="14" />
+                    <line x1="23" y1="11" x2="17" y2="11" />
+                </svg>
                 <h3>Register Account</h3>
-                <p>Create your account to participate in the competition.</p>
+                <p>Create your account to participate in the competition</p>
             </div>
-            <div class="step">
+
+            <div class="step-card">
                 <div class="step-number">2</div>
+                <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                </svg>
                 <h3>Submit Essay</h3>
-                <p>Write and submit your essay on the given topic.</p>
+                <p>Write and submit your essay on the given topic</p>
             </div>
-            <div class="step">
+
+            <div class="step-card">
                 <div class="step-number">3</div>
+                <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <ellipse cx="12" cy="5" rx="9" ry="3" />
+                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
+                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
+                </svg>
                 <h3>AI Analysis</h3>
-                <p>Our system analyzes your essay for errors and quality.</p>
+                <p>Our system analyzes your essay for errors and quality</p>
             </div>
-            <div class="step">
+
+            <div class="step-card">
                 <div class="step-number">4</div>
+                <svg class="step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12" />
+                    <circle cx="12" cy="8" r="7" />
+                </svg>
                 <h3>View Rankings</h3>
-                <p>Check the leaderboard to see your ranking and performance.</p>
+                <p>Check the leaderboard to see your performance</p>
             </div>
         </div>
     </div>
@@ -88,34 +154,86 @@
 <!-- Contact Section -->
 <section id="contact" class="contact">
     <div class="container">
-        <h2 class="section-title">Contact Us</h2>
-        <p class="section-description">Have questions? Feel free to reach out to us</p>
+        <div class="section-header">
+            <span class="section-badge">Contact</span>
+            <h2 class="section-title">Get in Touch</h2>
+            <p class="section-description">
+                Have questions? Feel free to reach out to us
+            </p>
+        </div>
 
-        <div class="contact-content">
+        <div class="contact-grid">
             <div class="contact-info">
+                <h3>Contact Information</h3>
+
                 <div class="contact-item">
-                    <h3>Email</h3>
-                    <p>info@essaycompetition.np</p>
+                    <div class="contact-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                    </div>
+                    <div class="contact-item-content">
+                        <h4>Email</h4>
+                        <p>info@essaycompetition.np</p>
+                    </div>
                 </div>
+
                 <div class="contact-item">
-                    <h3>Phone</h3>
-                    <p>+977-1-XXXXXXX</p>
+                    <div class="contact-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                        </svg>
+                    </div>
+                    <div class="contact-item-content">
+                        <h4>Phone</h4>
+                        <p>+977-1-XXXXXXX</p>
+                    </div>
                 </div>
+
                 <div class="contact-item">
-                    <h3>Address</h3>
-                    <p>Kathmandu, Nepal</p>
+                    <div class="contact-item-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                            <circle cx="12" cy="10" r="3" />
+                        </svg>
+                    </div>
+                    <div class="contact-item-content">
+                        <h4>Address</h4>
+                        <p>Kathmandu, Nepal</p>
+                    </div>
                 </div>
             </div>
 
-            <form class="contact-form">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <textarea placeholder="Your Message" rows="5" required></textarea>
-                <button type="submit" class="btn-submit">Send Message</button>
-            </form>
+            <div class="contact-form-wrapper">
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" name="message" rows="5" placeholder="How can we help you?"
+                            required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        Send Message
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="22" y1="2" x2="11" y2="13" />
+                            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                        </svg>
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 </section>
 {% endblock %}
-
-
