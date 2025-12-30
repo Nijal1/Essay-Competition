@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("essayForm");
   const essayTitle = document.getElementById("essayTitle");
   const submitBtn = document.getElementById("submitBtn");
-  const saveDraftBtn = document.getElementById("saveDraft");
   const previewBtn = document.getElementById("previewBtn");
   const previewModal = document.getElementById("previewModal");
   const closeModal = document.getElementById("closeModal");
@@ -58,38 +57,50 @@ document.addEventListener("DOMContentLoaded", () => {
       alert("Please enter both title and content.");
       return;
     }
+
     previewTitle.textContent = essayTitle.value.trim();
     previewContent.textContent = finalText;
-    previewModal.style.display = "block";
+
+    previewModal.classList.add("active"); //  show modal
   });
 
   closeModal.addEventListener("click", () => {
-    previewModal.style.display = "none";
+    previewModal.classList.remove("active"); //  hide modal
+  });
+
+  // Close modal by clicking outside content
+  previewModal.addEventListener("click", (e) => {
+    if (e.target === previewModal) {
+      previewModal.classList.remove("active");
+    }
   });
 
   // ------------------ Save Draft as PDF ------------------
-  saveDraftBtn.addEventListener("click", () => {
-    const finalText = getFinalText();
-    if (!essayTitle.value.trim() || !finalText.trim()) {
-      alert("Enter title and content first!");
-      return;
-    }
+  const saveDraftBtn = document.getElementById("saveDraft");
+  if (saveDraftBtn) {
+    saveDraftBtn.addEventListener("click", () => {
+      const finalText = getFinalText();
+      if (!essayTitle.value.trim() || !finalText.trim()) {
+        alert("Enter title and content first!");
+        return;
+      }
 
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
 
-    doc.setFontSize(14);
-    doc.text(`Author: ${username}`, 10, 15);
+      doc.setFontSize(14);
+      doc.text(`Author: ${username}`, 10, 15);
 
-    doc.setFontSize(18);
-    doc.text(essayTitle.value.trim(), 10, 30);
+      doc.setFontSize(18);
+      doc.text(essayTitle.value.trim(), 10, 30);
 
-    doc.setFontSize(12);
-    const lines = doc.splitTextToSize(finalText, 180);
-    doc.text(lines, 10, 45);
+      doc.setFontSize(12);
+      const lines = doc.splitTextToSize(finalText, 180);
+      doc.text(lines, 10, 45);
 
-    doc.output("dataurlnewwindow");
-  });
+      doc.output("dataurlnewwindow");
+    });
+  }
 
   // ------------------ Submit Essay ------------------
   submitBtn.addEventListener("click", () => {
@@ -102,4 +113,16 @@ document.addEventListener("DOMContentLoaded", () => {
     hiddenContent.value = finalText; // Fill hidden textarea
     form.submit(); // Submit the form to Django
   });
+
+  // Disable context menu & copy-paste
+  // document.addEventListener("contextmenu", (e) => e.preventDefault());
+  // document.addEventListener("keydown", (e) => {
+  //   if (
+  //     (e.ctrlKey || e.metaKey) &&
+  //     ["c", "v", "x"].includes(e.key.toLowerCase())
+  //   ) {
+  //     e.preventDefault();
+  //     alert("Copy-paste shortcuts are disabled.");
+  //   }
+  // });
 });

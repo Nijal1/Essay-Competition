@@ -80,3 +80,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+// Hide ONLY navbar on scroll down
+const header = document.querySelector(".header");
+let lastScrollY = window.scrollY;
+
+window.addEventListener("scroll", () => {
+  const currentScrollY = window.scrollY;
+
+  if (currentScrollY > lastScrollY && currentScrollY > 120) {
+    header.classList.add("hide");
+  } else {
+    header.classList.remove("hide");
+  }
+
+  lastScrollY = currentScrollY;
+});

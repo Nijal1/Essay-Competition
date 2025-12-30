@@ -208,6 +208,7 @@
                     <tr>
                         <th>Username</th>
                         <th>Date of Birth</th>
+                        <th>Identity Document</th>
                         <th>Active</th>
                         <th>Staff</th>
                         <th>Superuser</th>
@@ -225,6 +226,15 @@
                             </div>
                         </td>
                         <td>{{ user.DOB|default:"N/A" }}</td>
+                        <td>
+                            {% if user.identydoc %}
+                            <a href="{{ user.identydoc.url }}" target="_blank">
+                                {{ user.identydoc.name|slice:"10:" }}
+                            </a>
+                            {% else %}
+                            <span class="text-muted">No file</span>
+                            {% endif %}
+                        </td>
                         <td>
                             {% if user.is_active %}
                             <span class="check-icon"><i data-feather="check-circle"></i></span>
@@ -259,7 +269,19 @@
                             {% else %}
                             <span class="text-muted">You</span>
                             {% endif %}
+
                         </td>
+                        <td>
+                            <!-- Change Password -->
+                            {% if user != request.user %}
+                            <button class="btn btn-primary" onclick="openPasswordModal( '{{ user.username }}')">
+                                <i data-feather="key"></i> Change Password
+                            </button>
+                            {% else %}
+                            <span class="text-muted">You</span>
+                            {% endif %}
+                        </td>
+
 
                     </tr>
                     {% empty %}
@@ -290,6 +312,10 @@
                         <th>User</th>
                         <th>Title</th>
                         <th>Score</th>
+                        <th>Grammar Errors</th>
+                        <th>Spelling Errors</th>
+                        <th>Total Errors</th>
+                        <th>Submitted On</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
@@ -307,6 +333,10 @@
                         <td>
                             <span class="score-badge">{{ essay.score|default:"N/A" }}</span>
                         </td>
+                        <td>{{ essay.grammar_errors|default:"0" }}</td>
+                        <td>{{ essay.spelling_errors|default:"0" }}</td>
+                        <td>{{ essay.total_errors|default:"0" }}</td>
+                        <td>{{ essay.created_at|date:"M d, Y" }}</td>
                         <td>
                             {% if essay.is_approved %}
                             <span class="status-badge approved">
@@ -369,6 +399,50 @@
         </div>
     </div>
 </div>
+
+<!-- Change Password Modal -->
+<div id="passwordModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Change Password for <span id="modalUsernameDisplay"></span></h2>
+            <button class="modal-close" onclick="closePasswordModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="passwordForm" method="post" action="{% url 'change_user_password' %}">
+                {% csrf_token %}
+                <input type="hidden" name="username" id="modalUsernameInput">
+
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" name="new_password" id="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" name="confirm_password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn2">Change Password</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function openPasswordModal(username) {
+        document.getElementById('modalUsernameInput').value = username;
+        document.getElementById('modalUsernameDisplay').textContent = username;
+        const modal = document.getElementById('passwordModal');
+        modal.classList.add('show');
+    }
+
+    function closePasswordModal() {
+        const modal = document.getElementById('passwordModal');
+        modal.classList.remove('show');
+    }
+</script>
+
+
 
 <script>
     // Re-initialize Feather icons after content loads

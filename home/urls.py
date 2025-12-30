@@ -11,6 +11,8 @@ urlpatterns = [
     path('submit/', views.submit_essay, name='submit_essay'),
     path('leaderboard/', views.leaderboard, name='leaderboard'),
     path('profile/', views.user_profile, name='profile'),
+    
+
 
 
     # CUSTOM ADMIN DASHBOARD
@@ -23,6 +25,10 @@ urlpatterns = [
     path('dashboard/essay/<int:essay_id>/approve/', views.approve_essay, name='approve_essay'),
     path('dashboard/essay/<int:essay_id>/reject/', views.reject_essay, name='reject_essay'),
     path('dashboard/essay/<int:essay_id>/delete/', views.delete_essay, name='delete_essay'),
+    path('dashboard/change_password/', views.change_user_password, name='change_user_password'),
+
+    
+
 
     # DEFAULT DJANGO ADMIN
     path('admin/', admin.site.urls),

@@ -80,13 +80,49 @@ h6 {
 /* ================================================
    HEADER
 ================================================ */
+/* ================================================
+   HEADER SCROLL BEHAVIOR
+================================================ */
 .header {
     background: var(--white);
     box-shadow: var(--shadow-md);
     position: sticky;
     top: 0;
     z-index: 1000;
+    transition: transform var(--transition-base),
+        box-shadow var(--transition-base);
 }
+
+/* ================================================
+   NAVBAR SCROLL HIDE (SYMBOLS STAY VISIBLE)
+================================================ */
+
+/* Navbar animation */
+.navbar {
+    transition: transform var(--transition-base),
+        opacity var(--transition-base);
+}
+
+/* Hide navbar only */
+.navbar.hide {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Hide entire header */
+.header {
+    transition: transform var(--transition-base),
+        opacity var(--transition-base);
+}
+
+.header.hide {
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+
 
 /* Symbols Bar */
 .symbols-container {
@@ -247,16 +283,6 @@ h6 {
     gap: 12px;
 }
 
-.btn-login,
-.btn-register {
-    padding: 10px 24px;
-    text-decoration: none;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    font-size: 14px;
-    transition: all var(--transition-base);
-}
-
 .btn-login {
     color: var(--primary);
     border: 2px solid var(--primary);
@@ -269,19 +295,6 @@ h6 {
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
 }
-
-.btn-register {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    color: var(--white);
-    border: 2px solid transparent;
-}
-
-.btn-register:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(220, 20, 60, 0.35);
-}
-
-
 
 /* Profile Dropdown */
 .profile-dropdown {

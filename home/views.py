@@ -11,6 +11,9 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet
 from django.db.models import Avg, Sum
+from django.contrib.auth import get_user_model
+
+from django.contrib.auth.models import User
 
 User = get_user_model()
 
@@ -271,3 +274,33 @@ def submit_essay(request):
 def leaderboard(request):
     essays = Essay.objects.filter(is_approved=True).order_by('-score', 'total_errors', 'created_at')
     return render(request, "leaderboard.html", {"essays": essays})
+
+
+
+#change pass
+@login_required
+@admin_required
+def change_user_password(request):
+    if request.method == 'POST':
+        username = request.POST.get('username').strip()  # Strip spaces
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if new_password != confirm_password:
+            messages.error(request, "Passwords do not match!")
+            return redirect('admin_dashboard')
+
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            messages.error(request, f"No user found with username: {username}")
+            return redirect('admin_dashboard')
+
+        user.set_password(new_password)
+        user.save()
+        messages.success(request, f"Password for {user.username} updated successfully!")
+        return redirect('admin_dashboard')
+
+
+
+

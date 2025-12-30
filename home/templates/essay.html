@@ -30,21 +30,6 @@
                     <span class="error-message" id="titleError"></span>
                 </div>
 
-                <!-- Essay Topic (Optional) -->
-                <div class="form-group">
-                    <label for="essayTopic">Topic/Category</label>
-                    <select id="essayTopic" name="topic">
-                        <option value="">Select a topic (optional)</option>
-                        <option value="education">Education</option>
-                        <option value="technology">Technology</option>
-                        <option value="environment">Environment</option>
-                        <option value="social">Social Issues</option>
-                        <option value="culture">Culture</option>
-                        <option value="politics">Politics</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-
                 <div class="form-group">
                     <label for="essayLanguage">Language</label>
                     <select id="essayLanguage" name="topic">
@@ -95,14 +80,6 @@
 
                 <!-- Action Buttons -->
                 <div class="form-actions">
-                    <button type="button" class="btn-secondary" id="saveDraft">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
-                            <polyline points="17 21 17 13 7 13 7 21" />
-                            <polyline points="7 3 7 8 15 8" />
-                        </svg>
-                        Save as Draft
-                    </button>
                     <button type="button" class="btn-preview" id="previewBtn">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
@@ -117,12 +94,6 @@
                                 <polygon points="22 2 15 22 11 13 2 9 22 2" />
                             </svg>
                             Submit Essay
-                        </span>
-                        <span class="btn-loader" style="display: none;">
-                            <svg class="spinner" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" />
-                            </svg>
-                            Processing...
                         </span>
                     </button>
                 </div>
@@ -147,24 +118,7 @@
             <h3 id="previewTitle"></h3>
             <div id="previewContent"></div>
         </div>
-        <div class="modal-footer">
-            <button class="btn-secondary" id="closePreview">Close</button>
-        </div>
-    </div>
-</div>
-
-<!-- Success Modal -->
-<div class="modal" id="successModal">
-    <div class="modal-content success-content">
-        <div class="success-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                <polyline points="22 4 12 14.01 9 11.01" />
-            </svg>
-        </div>
-        <h2>Essay Submitted Successfully!</h2>
-        <p>Your essay is being analyzed. You will be redirected to the results page.</p>
-        <button class="btn-primary" id="viewResults">View Results</button>
+        
     </div>
 </div>
 
