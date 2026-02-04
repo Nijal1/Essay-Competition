@@ -286,6 +286,8 @@ h6 {
 .btn-login {
     color: var(--primary);
     border: 2px solid var(--primary);
+    border-radius: 10px;
+    padding: 8px 26px;
     background: transparent;
 }
 

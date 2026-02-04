@@ -802,19 +802,21 @@ body {
     cursor: pointer;
 }
 
+
 .btn2{
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 8px 12px;
-    border-radius: 8px;
+    padding: 8px 122px;
+    border-radius: 10px;
     text-decoration: none;
     font-weight: 600;
     font-size: 13px;
     transition: all 0.2s;
     border: none;
     cursor: pointer;
+    padding-top: 10px;
+    margin-top: 16px;
+    text-align: center;
+    display: block;
+    margin: 24px auto 0 auto;
 }
 
 .btn2:hover {
