@@ -26,6 +26,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     identydoc = models.FileField(upload_to='user_docs/', blank=True, null=True)  
     DOB = models.DateField(null=True, blank=True)
     status = models.CharField(max_length=20, default="active")
+    
+    total_points = models.IntegerField(default=0)  #  Added for ml
 
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
@@ -42,8 +44,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.username
 
 
-from django.db import models
-
 
 
 class Essay(models.Model):
@@ -55,6 +55,11 @@ class Essay(models.Model):
     spelling_errors = models.PositiveIntegerField(default=0)
     total_errors = models.PositiveIntegerField(default=0)
     score = models.FloatField(default=0)
+    
+    points = models.PositiveIntegerField(default=0)
+
+    points = models.IntegerField(default=0)  #  Added for ml
+
     pdf_file = models.FileField(upload_to="essays/pdfs/", blank=True, null=True)
     
     is_approved = models.BooleanField(default=False)

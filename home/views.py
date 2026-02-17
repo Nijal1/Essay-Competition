@@ -13,6 +13,8 @@ from reportlab.lib.styles import getSampleStyleSheet
 from django.db.models import Avg, Sum
 from django.contrib.auth import get_user_model
 
+from .utils_ml import predict_score
+
 from django.contrib.auth.models import User
 
 User = get_user_model()
@@ -113,22 +115,45 @@ def admin_dashboard(request):
 @admin_required
 def approve_essay(request, essay_id):
     essay = get_object_or_404(Essay, id=essay_id)
-    essay.is_approved = True
-    essay.is_rejected = False
-    essay.save()
-    messages.success(request, f"Essay '{essay.title}' approved.")
+    
+    # Only calculate points if not approved yet
+    if not essay.is_approved:
+        essay.is_approved = True
+        essay.is_rejected = False
+
+        # POINT CALCULATION
+        points = max(0, int(essay.score))  # Use the ML score
+        essay.points = points
+        essay.save()
+
+        # Update user's total points
+        request.user.total_points += points
+        request.user.save()
+
+        messages.success(request, f"Essay '{essay.title}' approved. {points} points added.")
+
     return redirect('admin_dashboard')
+
 
 
 @login_required
 @admin_required
 def reject_essay(request, essay_id):
     essay = get_object_or_404(Essay, id=essay_id)
+
+    if essay.is_approved:
+        # Subtract points if it was previously approved
+        request.user.total_points -= essay.points
+        request.user.save()
+
     essay.is_approved = False
     essay.is_rejected = True
+    essay.points = 0
     essay.save()
-    messages.success(request, f"Essay '{essay.title}' rejected.")
+
+    messages.success(request, f"Essay '{essay.title}' rejected. Points removed if previously awarded.")
     return redirect('admin_dashboard')
+
 
 
 @login_required
@@ -239,6 +264,14 @@ def submit_essay(request):
         total_words = len(content.split())
         score = max(0, 100 - (total_errors * 2)) if total_words > 0 else 0
 
+         #  ML PREDICTION
+        score = predict_score(grammar_errors, spelling_errors, total_errors, total_words, model="dt")
+
+
+        #  POINT SYSTEM
+        points = max(0, int(score))
+
+
         # Save PDF
         buffer = BytesIO()
         doc = SimpleDocTemplate(buffer, pagesize=letter)
@@ -261,10 +294,17 @@ def submit_essay(request):
             spelling_errors=spelling_errors,
             total_errors=total_errors,
             score=score,
+            points=0,
             pdf_file=pdf_file,
             is_approved=False,
             is_rejected=False
         )
+
+        #  Update user total points
+        request.user.total_points += points
+        request.user.save()
+
+        messages.success(request, f"Essay submitted! You earned {points} points.")
 
         return redirect("home")
 
@@ -300,6 +340,30 @@ def change_user_password(request):
         user.save()
         messages.success(request, f"Password for {user.username} updated successfully!")
         return redirect('admin_dashboard')
+
+
+from django.db.models import Sum, Avg
+
+@login_required
+def user_profile(request):
+    user = request.user
+    essays = Essay.objects.filter(user=user)
+
+    total_score = essays.aggregate(Sum("score"))["score__sum"] or 0
+    average_score = essays.aggregate(Avg("score"))["score__avg"] or 0
+    total_points = essays.aggregate(Sum("points"))["points__sum"] or 0  # <-- total points
+
+    context = {
+        "user": user,
+        "essay_count": essays.count(),
+        "total_score": total_score,
+        "average_score": average_score,
+        "total_points": total_points,  # <-- pass to template               
+        "essays": essays,
+    }
+    return render(request, "profile.html", context)
+
+
 
 
 

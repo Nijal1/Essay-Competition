@@ -29,19 +29,26 @@
             <div class="stat-label">Total Essays</div>
             <div class="stat-value">{{ essay_count }}</div>
         </div>
-
+    
         <div class="stat-card">
             <div class="stat-icon score">🏆</div>
             <div class="stat-label">Total Score</div>
             <div class="stat-value">{{ total_score }}</div>
         </div>
-
+    
         <div class="stat-card">
             <div class="stat-icon average">⭐</div>
             <div class="stat-label">Average Score</div>
             <div class="stat-value">{{ average_score|floatformat:2 }}</div>
         </div>
+    
+        <div class="stat-card">
+            <div class="stat-icon points">💎</div>
+            <div class="stat-label">Total Points</div>
+            <div class="stat-value">{{ total_points }}</div>
+        </div>
     </div>
+
 
     <!-- Essays Section -->
     <div class="essays-section">
@@ -56,6 +63,7 @@
                 <tr>
                     <th>Essay Title</th>
                     <th>Score</th>
+                    <th>Points</th>
                     <th>Status</th>
                     <th>Document</th>
                 </tr>
@@ -71,6 +79,10 @@
                     <td>
                         <span class="essay-score">{{ essay.score }}</span>
                     </td>
+                    <td>
+                        <span class="essay-points">+{{ essay.points }}</span>
+                    </td>
+
                     <td>
                         {% if essay.is_approved %}
                         <span class="status-badge approved">
